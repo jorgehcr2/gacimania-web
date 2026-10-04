@@ -39,13 +39,11 @@
         document.getElementById('open-app-btn').href = appUrl;
 
         // Detecta iOS vs Android para enlazar a la store correspondiente.
-        // TODO (Jorge): sustituye iosStoreUrl por el enlace exacto de App Store Connect en
-        // cuanto lo tengas -- de momento usa el buscador oficial de Apple como alternativa
-        // segura (funciona, pero no lleva directo a la ficha). Android todavía no está
-        // publicada (prueba cerrada en marcha), así que no se enlaza a ningún lado todavía.
+        // Android todavía no está publicada (prueba cerrada en marcha), así que no se
+        // enlaza a ningún lado todavía.
         const ua = navigator.userAgent || '';
         const isAndroid = /Android/i.test(ua);
-        const iosStoreUrl = 'https://apps.apple.com/search?term=GACIMANIA';
+        const iosStoreUrl = 'https://apps.apple.com/app/id6807048899';
         const downloadBtn = document.getElementById('download-btn');
         if (isAndroid) {
             downloadBtn.textContent = 'Próximamente en Android';
