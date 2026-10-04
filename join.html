@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Únete a una partida — GACIMANIA</title>
+<style>
+    body { font-family: -apple-system, Helvetica, Arial, sans-serif; background: #2B1B12; color: #F4E8CB; margin: 0; padding: 0 20px 60px; text-align: center; }
+    .icon { width: 96px; height: 96px; border-radius: 24px; margin-top: 48px; box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
+    h1 { color: #fff; font-size: 1.6em; margin: 20px 0 4px; }
+    p.tagline { color: #C4A876; font-size: 1em; margin-bottom: 28px; }
+    .code-box { background: #F4E8CB; color: #2B1810; display: inline-block; padding: 14px 32px; border-radius: 12px; font-weight: 900; font-size: 2em; letter-spacing: 4px; margin-bottom: 28px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+    .links { display: flex; flex-direction: column; gap: 12px; max-width: 320px; margin: 0 auto; }
+    a.btn { display: block; background: #FF6B35; color: #fff; text-decoration: none; padding: 16px; border-radius: 12px; font-weight: bold; font-size: 1.05em; }
+    a.btn-secondary { background: #4E3116; }
+    p.hint { color: #C4A876; font-size: 0.85em; margin-top: 28px; line-height: 1.5; }
+    a.link { color: #FF9E70; }
+</style>
+</head>
+<body>
+    <img class="icon" src="./icon.png" alt="GACIMANIA">
+    <h1>¡Te han invitado a jugar!</h1>
+    <p class="tagline">Código de la sala</p>
+    <div class="code-box" id="code-box">----</div>
+
+    <div class="links">
+        <a class="btn" id="open-app-btn" href="#">Abrir en GACIMANIA</a>
+        <a class="btn btn-secondary" id="download-btn" href="#" target="_blank" rel="noopener">¿No la tienes? Descárgala</a>
+    </div>
+
+    <p class="hint">Si ya tienes la app instalada, el botón de arriba te lleva directo a la sala.<br>Si no, descárgala primero y luego vuelve a abrir este enlace o introduce el código a mano.</p>
+
+    <script>
+        const params = new URLSearchParams(location.search);
+        const code = (params.get('code') || '').toUpperCase();
+        document.getElementById('code-box').textContent = code || '----';
+
+        const appUrl = 'myapp://online-setup?code=' + encodeURIComponent(code);
+        document.getElementById('open-app-btn').href = appUrl;
+
+        // Detecta iOS vs Android para enlazar a la store correspondiente.
+        // TODO (Jorge): sustituye iosStoreUrl por el enlace exacto de App Store Connect en
+        // cuanto lo tengas -- de momento usa el buscador oficial de Apple como alternativa
+        // segura (funciona, pero no lleva directo a la ficha). Android todavía no está
+        // publicada (prueba cerrada en marcha), así que no se enlaza a ningún lado todavía.
+        const ua = navigator.userAgent || '';
+        const isAndroid = /Android/i.test(ua);
+        const iosStoreUrl = 'https://apps.apple.com/search?term=GACIMANIA';
+        const downloadBtn = document.getElementById('download-btn');
+        if (isAndroid) {
+            downloadBtn.textContent = 'Próximamente en Android';
+            downloadBtn.removeAttribute('href');
+            downloadBtn.style.opacity = '0.6';
+            downloadBtn.style.pointerEvents = 'none';
+        } else {
+            downloadBtn.href = iosStoreUrl;
+        }
+    </script>
+</body>
+</html>
